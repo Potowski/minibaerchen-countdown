@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #countdownBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #heading {
+    font-family: Arial, sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    color: #FFB56B;
+    text-shadow:
+      0 0 8px #FF9A40,
+      0 0 18px #D96B18,
+      2px 3px 5px #000000;
+  }
+
+  #countdown {
+    font-family: Consolas, monospace;
+    font-size: 132px;
+    font-weight: bold;
+    color: #8DEBFF;
+    text-shadow:
+      0 0 3px #FFFFFF,
+      0 0 10px #8DEBFF,
+      0 0 20px #00BFFF,
+      0 0 35px #00BFFF,
+      0 0 55px #007BFF,
+      0 0 75px #0055FF,
+      3px 3px 6px #000000;
+  }
+</style>
+</head>
+<body>
+
+<div id="countdownBox">
+  <div id="heading">STREAM STARTET IN</div>
+  <div id="countdown">05:00</div>
+</div>
+
+<script>
+  const duration = 5 * 60 * 1000;
+  const start = performance.now();
+
+  const display = document.getElementById("countdown");
+  const countdownBox = document.getElementById("countdownBox");
+
+  function updateCountdown() {
+    const elapsed = performance.now() - start;
+    const remaining = Math.max(
+      0,
+      Math.ceil((duration - elapsed) / 1000)
+    );
+
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
+
+    display.textContent =
+      String(minutes).padStart(2, "0") + ":" +
+      String(seconds).padStart(2, "0");
+
+    if (remaining > 0) {
+      requestAnimationFrame(updateCountdown);
+    } else {
+      countdownBox.style.display = "none";
+    }
+  }
+
+  updateCountdown();
+</script>
+
+</body>
+</html>
